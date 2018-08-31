@@ -1,3 +1,2 @@
 # SpringMVCDemo
 一个简单的SpringBootDemo
-集成Maven,模板引擎Thymeleaf,主要展示,目录结构,业务编写位置,Spring自带的JdbcTemplate案例演示
