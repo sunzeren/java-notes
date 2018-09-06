@@ -1,5 +1,6 @@
 package com.sun.pojo;
 
+import io.swagger.annotations.Api;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Component;
  */
 @Component("yhy")
 @Data
+@Api(value = "这个类主要用于测试通过BeanUtil直接调用Bean")
 public class BeanTest {
     private String name = "杨海洋";
     private String gender = "未知";

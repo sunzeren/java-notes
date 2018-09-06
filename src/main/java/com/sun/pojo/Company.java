@@ -1,5 +1,6 @@
 package com.sun.pojo;
 
+import io.swagger.annotations.Api;
 import lombok.Data;
 
 import java.util.Date;
@@ -9,6 +10,7 @@ import java.util.Date;
  * PS: Not easy to write code, please indicate.
  */
 @Data
+@Api(value = "Company实体类")
 public class Company {
     private int id;
     private String name;
