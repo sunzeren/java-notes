@@ -1,13 +1,13 @@
 package com.sun.controller;
 
+import com.sun.pojo.ValidatorBean;
 import com.sun.service.CompanyService;
 import com.sun.service.OtherService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,11 +31,11 @@ public class MainController {
     OtherService otherService;
 
     @RequestMapping(value = "/testForJDBC", method = RequestMethod.GET)
-    @ApiOperation(value="查询所有Company", notes="返回模型和视图")
-    public ModelAndView login(){
+    @ApiOperation(value = "查询所有Company", notes = "返回模型和视图")
+    public ModelAndView login() {
         ModelAndView mv = new ModelAndView();
         List list = companyService.selectAllCompany();
-        mv.addObject("list",list );
+        mv.addObject("list", list);
         mv.setViewName("login");
 
         /**调用🐖*/
@@ -43,4 +43,10 @@ public class MainController {
         return mv;
     }
 
+
+    @RequestMapping(value = "/bean", method = RequestMethod.GET)
+    @ApiOperation(value = "测试Validator", notes = "测试校验")
+    public void validatorBeanTest(@Validated ValidatorBean bean) {
+        System.out.println("bean = " + bean);
+    }
 }
