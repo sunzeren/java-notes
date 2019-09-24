@@ -1,6 +1,7 @@
 package com.sun.controller;
 
 import com.sun.pojo.ValidatorBean;
+import com.sun.service.CacheService;
 import com.sun.service.CompanyService;
 import com.sun.service.OtherService;
 import io.swagger.annotations.Api;
@@ -29,6 +30,8 @@ public class MainController {
     CompanyService companyService;
     @Autowired
     OtherService otherService;
+    @Autowired
+    CacheService cacheService;
 
     @RequestMapping(value = "/testForJDBC", method = RequestMethod.GET)
     @ApiOperation(value = "查询所有Company", notes = "返回模型和视图")
@@ -49,4 +52,13 @@ public class MainController {
     public void validatorBeanTest(@Validated ValidatorBean bean) {
         System.out.println("bean = " + bean);
     }
+
+
+    @RequestMapping(value = "/cache", method = RequestMethod.GET)
+    @ApiOperation(value = "缓存测试", notes = "测试缓存")
+    public String cacheTest(String id) {
+        return cacheService.getOrder(id);
+    }
+
+
 }
