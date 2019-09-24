@@ -1,7 +1,6 @@
 package com.sun.controller;
 
 import com.sun.pojo.ValidatorBean;
-import com.sun.service.CacheService;
 import com.sun.service.CompanyService;
 import com.sun.service.OtherService;
 import io.swagger.annotations.Api;
@@ -9,8 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -30,10 +28,8 @@ public class MainController {
     CompanyService companyService;
     @Autowired
     OtherService otherService;
-    @Autowired
-    CacheService cacheService;
 
-    @RequestMapping(value = "/testForJDBC", method = RequestMethod.GET)
+    @GetMapping(value = "/testForJDBC")
     @ApiOperation(value = "查询所有Company", notes = "返回模型和视图")
     public ModelAndView login() {
         ModelAndView mv = new ModelAndView();
@@ -47,17 +43,10 @@ public class MainController {
     }
 
 
-    @RequestMapping(value = "/bean", method = RequestMethod.GET)
+    @GetMapping(value = "/bean")
     @ApiOperation(value = "测试Validator", notes = "测试校验")
     public void validatorBeanTest(@Validated ValidatorBean bean) {
         System.out.println("bean = " + bean);
-    }
-
-
-    @RequestMapping(value = "/cache", method = RequestMethod.GET)
-    @ApiOperation(value = "缓存测试", notes = "测试缓存")
-    public String cacheTest(String id) {
-        return cacheService.getOrder(id);
     }
 
 
