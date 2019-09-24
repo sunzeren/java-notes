@@ -46,7 +46,7 @@ public class RequestController {
     }
 
     @PostMapping("/postByBody")
-    @ApiOperation(value = "post请求,测试body", notes = "post请求测试body")
+    @ApiOperation(value = "post请求,测试请求正文body", notes = "post请求测试,从request输入流中获取内容")
     public void bodyTest() {
         //与上同理
         //public void bodyTest(@RequestBody Company company) {
