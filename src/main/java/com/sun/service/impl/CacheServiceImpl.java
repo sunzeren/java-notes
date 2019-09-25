@@ -45,4 +45,11 @@ public class CacheServiceImpl implements CacheService {
         return orders.get(id);
     }
 
+    @Override
+    @Cacheable(cacheNames = "expireKey")
+    public String expire(String id) {
+        System.out.println("进入了expire()方法体");
+        return id;
+    }
+
 }
