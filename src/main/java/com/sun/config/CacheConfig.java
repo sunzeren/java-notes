@@ -33,6 +33,7 @@ public class CacheConfig {
      * ide 点击 CacheManager 左侧的绿色圆圈里有箭头的按钮,进入SpringBoot 配置Bean的默认方法
      * 观察得知,须有一个 ResourceLoader 传入,在 RedisCacheConfiguration 中的 valueSerializationPair ,即序列化键的value时使用此ClassLoader
      * 以上,问题得以解决
+     * 总结: 本次经历虽耗费半天时间,但却体现了个SpringBoot配置问题的解决思路,仅此记录,望抛砖引玉
      */
 
     //------------------- 分析--------------------
