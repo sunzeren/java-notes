@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -46,13 +47,11 @@ public class MainController {
 
     @GetMapping(value = "/getAppSetting")
     @ApiOperation(value = "获取应用配置信息", notes = "获取应用配置信息")
-    public void getAppSetting() {
+    public List<Object> getAppSetting() {
         if (AppSetting.PORT == null) {
             throw new IllegalArgumentException("请在DemoApplication中,添加EnvironmentListener监听");
         }
-        System.out.println(AppSetting.PORT);
-        System.out.println(AppSetting.APP_NAME);
-        AppSetting.PROFILES_ACTIVE.forEach(System.out::println);
+        return Arrays.asList(String.format("端口号:%s", AppSetting.PORT), String.format("应用程序名称:%s", AppSetting.APP_NAME), AppSetting.PROFILES_ACTIVE);
     }
 
 
