@@ -2,7 +2,6 @@ package com.sun.service;
 
 import com.sun.pojo.BeanTest;
 import com.sun.util.BeanUtils;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
@@ -15,17 +14,19 @@ import java.util.Date;
 @Component
 public class OtherService {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    public void someService(){
+
+    public void someService() {
         /** */
     }
-    public String getNowTime(){
+
+    public String getNowTime() {
         Date date = new Date();
-        return "时间---->"+sdf.format(date);
+        return "时间---->" + sdf.format(date);
     }
 
-    public BeanTest getYhy(){
+    public BeanTest getYhy() {
         BeanTest bean = (BeanTest) BeanUtils.getBean("yhy");
-        System.out.println(getNowTime()+bean);
-        return  bean;
+        System.out.println(getNowTime() + bean);
+        return bean;
     }
 }

@@ -1,8 +1,8 @@
 package com.sun.controller;
 
+import com.sun.constant.AppSetting;
 import com.sun.pojo.ValidatorBean;
 import com.sun.service.CompanyService;
-import com.sun.service.OtherService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +26,6 @@ public class MainController {
     JdbcTemplate jdbcTemplate;
     @Autowired
     CompanyService companyService;
-    @Autowired
-    OtherService otherService;
 
     @GetMapping(value = "/testForJDBC")
     @ApiOperation(value = "查询所有Company", notes = "返回模型和视图")
@@ -36,17 +34,25 @@ public class MainController {
         List list = companyService.selectAllCompany();
         mv.addObject("list", list);
         mv.setViewName("login");
-
-        /**调用🐖*/
-        otherService.getYhy();
         return mv;
     }
 
 
-    @GetMapping(value = "/bean")
+    @GetMapping(value = "/validateBean")
     @ApiOperation(value = "测试Validator", notes = "测试校验")
     public void validatorBeanTest(@Validated ValidatorBean bean) {
         System.out.println("bean = " + bean);
+    }
+
+    @GetMapping(value = "/getAppSetting")
+    @ApiOperation(value = "获取应用配置信息", notes = "获取应用配置信息")
+    public void getAppSetting() {
+        if (AppSetting.PORT == null) {
+            throw new IllegalArgumentException("请在DemoApplication中,添加EnvironmentListener监听");
+        }
+        System.out.println(AppSetting.PORT);
+        System.out.println(AppSetting.APP_NAME);
+        AppSetting.PROFILES_ACTIVE.forEach(System.out::println);
     }
 
 
