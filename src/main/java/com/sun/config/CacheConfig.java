@@ -9,7 +9,6 @@ import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 
-import javax.annotation.PostConstruct;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,14 +37,14 @@ public class CacheConfig {
      */
 
     //------------------- 分析--------------------
-    @Autowired
-    CacheManager cacheManager;
-
-    @PostConstruct
-    public void viewCacheManager() {
-        RedisCacheManager redisCacheManager = (RedisCacheManager) this.cacheManager;
-        System.out.println(redisCacheManager);
-    }
+    //@Autowired
+    //CacheManager cacheManager;
+    //
+    //@PostConstruct
+    //public void viewCacheManager() {
+    //    RedisCacheManager redisCacheManager = (RedisCacheManager) this.cacheManager;
+    //    System.out.println(redisCacheManager);
+    //}
     //------------------- 分析--------------------
 
     @Autowired
