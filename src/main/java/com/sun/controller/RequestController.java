@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -62,5 +63,20 @@ public class RequestController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 用于测试 查看 POST请求中 参数的封装方式
+     *
+     * @param parameter
+     */
+    @PostMapping("/parameterMapTest")
+    public void parameterMapTest(String parameter) {
+        HttpServletRequest request = RequestTool.getCurrentServletRequest();
+        Map<String, String[]> parameterMap = request.getParameterMap();
+        parameterMap.forEach((key, value) -> {
+            System.out.println("key = " + key);
+            System.out.println("value = " + Arrays.toString(value));
+        });
     }
 }
