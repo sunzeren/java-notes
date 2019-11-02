@@ -24,9 +24,17 @@ public class CookieController {
 
     @GetMapping("/add")
     @ApiOperation(value = "添加cookie", notes = "添加cookie测试")
-    public String postTest(HttpServletRequest request, HttpServletResponse response) {
+    public String addCookie(HttpServletRequest request, HttpServletResponse response) {
         String cookieValue = "123456789";
         WebUtils.addCookie(request, response, cookieName, cookieValue);
+        return cookieValue;
+    }
+
+    @GetMapping("/add-header")
+    @ApiOperation(value = "通过Header添加cookie", notes = "通过添加响应的Header来添加cookie的测试")
+    public String addHeaderByHeader(HttpServletRequest request, HttpServletResponse response) {
+        String cookieValue = "cookie_=theCookieAddByHeader; Path=/";
+        response.addHeader(HttpHeaders.SET_COOKIE, cookieValue);
         return cookieValue;
     }
 
