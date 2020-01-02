@@ -3,7 +3,7 @@ package com.sun.controller;
 import com.sun.service.CacheService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +20,7 @@ public class CacheController {
     @Autowired
     CacheService cacheService;
     @Autowired
-    RedisTemplate redisTemplate;
+    StringRedisTemplate redisTemplate;
 
     @GetMapping(value = "/find")
     @ApiOperation(value = "缓存测试", notes = "测试缓存")
