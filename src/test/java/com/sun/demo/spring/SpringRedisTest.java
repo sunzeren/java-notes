@@ -10,10 +10,14 @@ import org.springframework.data.redis.core.StringRedisTemplate;
  */
 public class SpringRedisTest {
 
+    // SpringBoot提供的原生的Redis连接工厂
     private static final LettuceConnectionFactory factory = new LettuceConnectionFactory();
+    // 一般我们使用 StringRedisTemplate,因为默认的RedisTemplate其键值序列化方式为JdkSerializationRedisSerializer
+    // 其键值序列化为默认jdk序列化存储,不利于阅读
     private static final StringRedisTemplate redisTemplate = new StringRedisTemplate(factory);
 
     static {
+        // 初始化操作
         factory.afterPropertiesSet();
     }
 
