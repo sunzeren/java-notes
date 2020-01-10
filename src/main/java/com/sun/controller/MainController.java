@@ -68,12 +68,4 @@ public class MainController {
     }
 
 
-    //final CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-    //final HttpEntityEnclosingRequestBase httpGet = new HttpGetOfBody();
-    //    try {
-    //    final CloseableHttpResponse response = httpClient.execute(httpGet);
-    //    System.out.println("response = " + response);
-    //} catch (IOException e) {
-    //    e.printStackTrace();
-    //}
 }
