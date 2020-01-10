@@ -1,6 +1,7 @@
 package com.sun.controller;
 
 import com.sun.constant.AppSetting;
+import com.sun.pojo.Company;
 import com.sun.pojo.ValidatorBean;
 import com.sun.service.CompanyService;
 import io.swagger.annotations.Api;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -38,7 +40,6 @@ public class MainController {
         return mv;
     }
 
-
     @GetMapping(value = "/validateBean")
     @ApiOperation(value = "测试Validator", notes = "测试校验")
     public void validatorBeanTest(@Validated ValidatorBean bean) {
@@ -54,5 +55,25 @@ public class MainController {
         return Arrays.asList(String.format("端口号:%s", AppSetting.PORT), String.format("应用程序名称:%s", AppSetting.APP_NAME), AppSetting.PROFILES_ACTIVE);
     }
 
+    /**
+     * 用于测试get请求,携带请求正文参数
+     *
+     * @param company
+     * @return
+     */
+    @GetMapping("getOfBody")
+    public String getTest(@RequestBody Company company) {
+        System.out.println("company = " + company);
+        return "ok";
+    }
 
+
+    //final CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+    //final HttpEntityEnclosingRequestBase httpGet = new HttpGetOfBody();
+    //    try {
+    //    final CloseableHttpResponse response = httpClient.execute(httpGet);
+    //    System.out.println("response = " + response);
+    //} catch (IOException e) {
+    //    e.printStackTrace();
+    //}
 }
