@@ -1,8 +1,16 @@
 package com.sun.demo.gitLog;
 
+import org.apache.commons.io.IOUtils;
+import org.junit.Test;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Author by Sun, Date on 2020/1/10.
@@ -125,4 +133,12 @@ public class GenerateWeekReport {
         list.forEach(System.out::println);
     }
 
+    @Test
+    public void gitLog() throws IOException {
+        Runtime runtime = Runtime.getRuntime();
+        final Process exec = runtime.exec("git log");
+        final String logString = IOUtils.toString(exec.getInputStream(), StandardCharsets.UTF_8);
+        final List<String> logList = Stream.of(logString.split("\n")).collect(Collectors.toList());
+        System.out.println("logList = " + logList);
+    }
 }
