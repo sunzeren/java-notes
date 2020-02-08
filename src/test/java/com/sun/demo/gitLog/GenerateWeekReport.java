@@ -39,6 +39,7 @@ public class GenerateWeekReport {
      * 转换为每行单独的集合
      *
      * @param logString
+     * 00
      * @return
      */
     private List<String> converterToLineList(String logString) {
