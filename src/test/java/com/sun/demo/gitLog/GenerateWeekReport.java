@@ -1,9 +1,12 @@
 package com.sun.demo.gitLog;
 
+import com.deepoove.poi.XWPFTemplate;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Test;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -33,13 +36,33 @@ public class GenerateWeekReport {
         // 转换为对象集合
         List<GitLog> gitLogs = this.converterToObject(logOfOneRecordList);
         System.out.println("gitLogs = " + gitLogs);
+
+        this.generateWeeklyReport(gitLogs, "C:\\Users\\Sun\\Desktop\\");
+    }
+
+    /**
+     * 生成周报
+     *
+     * @param gitLogs
+     * @param filePath
+     */
+    private void generateWeeklyReport(List<GitLog> gitLogs, String filePath) {
+        Resource resource = new ClassPathResource("file/week-report.docx");
+        String fileName = "周报";
+        String outPath = filePath + fileName + ".docx";
+
+        try {
+            WeekReport model = WeekReport.builder(gitLogs);
+            XWPFTemplate.compile(resource.getInputStream()).render(model).writeToFile(outPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * 转换为每行单独的集合
      *
-     * @param logString
-     * 00
+     * @param logString 00
      * @return
      */
     private List<String> converterToLineList(String logString) {
