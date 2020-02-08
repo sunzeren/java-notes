@@ -2,6 +2,7 @@ package com.sun.pojo;
 
 import io.swagger.annotations.Api;
 import lombok.Data;
+import org.springframework.beans.factory.BeanFactory;
 
 import java.util.Date;
 
@@ -19,4 +20,6 @@ public class Company {
     private Date registrationTime;
     private Date phone;
     private String address;
+
+    private BeanFactory beanFactory;
 }
