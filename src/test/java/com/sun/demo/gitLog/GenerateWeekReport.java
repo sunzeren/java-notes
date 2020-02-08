@@ -26,9 +26,11 @@ public class GenerateWeekReport {
 
     @Test
     public void gitLog() throws IOException {
+        // 获取git日志字符
         final String logString = this.getGitLogStr();
+        // 转换为每行记录
         List<String> logOfOneRecordList = this.converterToLineList(logString);
-        System.out.println("logOfOneRecordList = " + logOfOneRecordList);
+        // 转换为对象集合
         List<GitLog> gitLogs = this.converterToObject(logOfOneRecordList);
         System.out.println("gitLogs = " + gitLogs);
     }
