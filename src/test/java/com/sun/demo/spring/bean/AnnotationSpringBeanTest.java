@@ -2,7 +2,9 @@ package com.sun.demo.spring.bean;
 
 import com.sun.pojo.Company;
 import org.springframework.beans.factory.annotation.Autowire;
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
@@ -17,6 +19,7 @@ public class AnnotationSpringBeanTest {
     public static void main(String[] args) {
         AnnotationConfigApplicationContext beanFactory = new AnnotationConfigApplicationContext();
         beanFactory.register(AnnotationSpringBeanTest.class);
+        beanFactory.registerBeanDefinition("MyBeanDefinition", getBeanDefinition());
         beanFactory.refresh();
 
         // 以上等同于
@@ -27,11 +30,24 @@ public class AnnotationSpringBeanTest {
         Company company = (Company) beanFactory.getBean("company");
         System.out.println("bean = " + company);
 
+        Company companyOfBeanDefinition = (Company) beanFactory.getBean("MyBeanDefinition");
+        System.out.println("companyOfBeanDefinition = " + companyOfBeanDefinition);
+
         Company factoryBean = (Company) beanFactory.getBean("factoryBeanTest");
         System.out.println("factoryBean = " + factoryBean);
 
         // 关闭应用上下文
         beanFactory.close();
+    }
+
+    /**
+     * 通过 BeanDefinition 注册bean
+     */
+    private static BeanDefinition getBeanDefinition() {
+        BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(Company.class);
+        builder.addPropertyValue("id", "10");
+        builder.addPropertyValue("name", "Sun");
+        return builder.getBeanDefinition();
     }
 
     /**
