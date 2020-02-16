@@ -22,4 +22,10 @@ public class Company {
     private String address;
 
     private BeanFactory beanFactory;
+
+    @Data
+    public static class InnerBean {
+        private String id;
+    }
+
 }
