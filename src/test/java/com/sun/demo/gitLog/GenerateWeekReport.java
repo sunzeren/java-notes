@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
@@ -30,7 +31,8 @@ public class GenerateWeekReport {
     @Test
     public void gitLog() throws IOException {
         // 获取git日志字符
-        final String logString = this.getGitLogStr();
+        File path = new File("E:\\work\\eskyray\\有技财务测评\\youjicaishui\\src");
+        final String logString = this.getGitLogStr(path);
         // 转换为每行记录
         List<String> logOfOneRecordList = this.converterToLineList(logString);
         // 转换为对象集合
@@ -85,12 +87,13 @@ public class GenerateWeekReport {
     /**
      * 获取 当前所在目录的git 日志字符
      *
+     * @param path 运行目录
      * @return git 日志
      * @throws IOException
      */
-    private String getGitLogStr() throws IOException {
+    private String getGitLogStr(File path) throws IOException {
         Runtime runtime = Runtime.getRuntime();
-        final Process exec = runtime.exec("git log");
+        final Process exec = runtime.exec("git log", null, path);
         return IOUtils.toString(exec.getInputStream(), StandardCharsets.UTF_8);
     }
 
