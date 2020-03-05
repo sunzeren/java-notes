@@ -23,6 +23,13 @@ public class Company {
 
     private BeanFactory beanFactory;
 
+    public Company() {
+    }
+
+    public Company(int id) {
+        this.id = id;
+    }
+
     @Data
     public static class InnerBean {
         private String id;

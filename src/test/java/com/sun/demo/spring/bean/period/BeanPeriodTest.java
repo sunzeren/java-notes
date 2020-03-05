@@ -34,8 +34,8 @@ public class BeanPeriodTest {
      * @Lazy 注解为当使用此Bean时才装配
      */
     @Bean(initMethod = "doInitMethod", destroyMethod = "doDestroy")
-    public BeanPeriodDemo periodDemo() {
-        return new BeanPeriodDemo();
+    public BeanPeriodBean periodDemo() {
+        return new BeanPeriodBean();
     }
 
 

@@ -11,7 +11,7 @@ import javax.annotation.PreDestroy;
  * PS: Not easy to write code, please indicate.
  * Bean 生命周期Demo
  */
-public class BeanPeriodDemo implements InitializingBean, DisposableBean {
+public class BeanPeriodBean implements InitializingBean, DisposableBean {
 
 
     /**
