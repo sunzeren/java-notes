@@ -25,7 +25,8 @@ import java.util.stream.Stream;
  * PS: Not easy to write code, please indicate.
  * 根据git提交日志 生成周报
  * 1. git提交日志转换为 数组对象
- * //TODO Sun 2020/2/8 根据数组对象生成doc文件
+ * <p>
+ * 模板路经 classpath:file/week-report.docx
  */
 public class GenerateWeekReport {
 
