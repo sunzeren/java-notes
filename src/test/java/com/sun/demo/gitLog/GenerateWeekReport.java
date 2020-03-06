@@ -3,6 +3,7 @@ package com.sun.demo.gitLog;
 import com.deepoove.poi.XWPFTemplate;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
@@ -30,8 +31,11 @@ public class GenerateWeekReport {
 
     @Test
     public void gitLog() throws IOException {
+        // 文件名称
+        String fileName = "周报" + DateFormatUtils.format(new Date(), "yyyy-MM-dd");
         // 获取git日志字符
-        File path = new File("E:\\work\\eskyray\\有技财务测评\\youjicaishui\\src");
+        File path = new File("E:\\work\\eskyray\\youji\\youjicaishui\\src");
+
         final String logString = this.getGitLogStr(path);
         // 转换为每行记录
         List<String> logOfOneRecordList = this.converterToLineList(logString);
@@ -39,7 +43,7 @@ public class GenerateWeekReport {
         List<GitLog> gitLogs = this.converterToObject(logOfOneRecordList);
         System.out.println("gitLogs = " + gitLogs);
 
-        this.generateWeeklyReport(gitLogs, "C:\\Users\\Sun\\Desktop\\");
+        this.generateWeeklyReport(gitLogs, "C:\\Users\\Sun\\Desktop\\", fileName);
     }
 
     /**
@@ -47,10 +51,10 @@ public class GenerateWeekReport {
      *
      * @param gitLogs
      * @param filePath
+     * @param fileName
      */
-    private void generateWeeklyReport(List<GitLog> gitLogs, String filePath) {
+    private void generateWeeklyReport(List<GitLog> gitLogs, String filePath, String fileName) {
         Resource resource = new ClassPathResource("file/week-report.docx");
-        String fileName = "周报";
         String outPath = filePath + fileName + ".docx";
 
         try {
