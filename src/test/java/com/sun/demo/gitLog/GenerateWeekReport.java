@@ -31,19 +31,25 @@ public class GenerateWeekReport {
 
     @Test
     public void gitLog() throws IOException {
+        // 文件输出地址
+        String fileOutPath = "C:\\Users\\Sun\\Desktop\\";
         // 文件名称
         String fileName = "周报" + DateFormatUtils.format(new Date(), "yyyy-MM-dd");
-        // 获取git日志字符
-        File path = new File("E:\\work\\eskyray\\youji\\youjicaishui\\src");
+        // git 提交作者
+        String author = "sunzeren";
+        // 开始检索时间
+        String beginTime = "2020.02.29";
+        // git仓库地址
+        String path = "E:\\work\\eskyray\\youji\\youjicaishui\\src";
 
-        final String logString = this.getGitLogStr(path);
+        // 获取git日志字符
+        final String logString = this.getGitLogStr(new File(path), author, beginTime);
         // 转换为每行记录
         List<String> logOfOneRecordList = this.converterToLineList(logString);
         // 转换为对象集合
         List<GitLog> gitLogs = this.converterToObject(logOfOneRecordList);
-        System.out.println("gitLogs = " + gitLogs);
 
-        this.generateWeeklyReport(gitLogs, "C:\\Users\\Sun\\Desktop\\", fileName);
+        this.generateWeeklyReport(gitLogs, fileOutPath, fileName);
     }
 
     /**
@@ -91,13 +97,24 @@ public class GenerateWeekReport {
     /**
      * 获取 当前所在目录的git 日志字符
      *
-     * @param path 运行目录
+     * @param path      运行目录
+     * @param author    git 提交作者
+     * @param beginTime 查找在此日期之后的日志
      * @return git 日志
      * @throws IOException
      */
-    private String getGitLogStr(File path) throws IOException {
+    private String getGitLogStr(File path, String author, String beginTime) throws IOException {
+
         Runtime runtime = Runtime.getRuntime();
-        final Process exec = runtime.exec("git log", null, path);
+        String gitLogCommand = "git log";
+        if (StringUtils.isNotEmpty(author)) {
+            gitLogCommand += " --author " + author.trim();
+        }
+        if (StringUtils.isNotEmpty(beginTime)) {
+            gitLogCommand += " --after " + beginTime.trim();
+        }
+
+        final Process exec = runtime.exec(gitLogCommand, null, path);
         return IOUtils.toString(exec.getInputStream(), StandardCharsets.UTF_8);
     }
 
