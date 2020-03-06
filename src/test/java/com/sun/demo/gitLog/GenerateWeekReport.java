@@ -55,9 +55,9 @@ public class GenerateWeekReport {
     /**
      * 生成周报
      *
-     * @param gitLogs
-     * @param filePath
-     * @param fileName
+     * @param gitLogs  git字符集合对象
+     * @param filePath 生成文件路径
+     * @param fileName 生成文件名称
      */
     private void generateWeeklyReport(List<GitLog> gitLogs, String filePath, String fileName) {
         Resource resource = new ClassPathResource("file/week-report.docx");
@@ -121,8 +121,8 @@ public class GenerateWeekReport {
     /**
      * 将字符转换为 对象
      *
-     * @param recordList
-     * @return
+     * @param recordList git每行字符集合
+     * @return 将字符转换后的对象
      */
     private List<GitLog> converterToObject(List<String> recordList) {
         List<GitLog> gitLogList = new ArrayList<>();
@@ -150,8 +150,7 @@ public class GenerateWeekReport {
     /**
      * 日期转换 为Date
      *
-     * @param dateStr
-     * @return
+     * @param dateStr 日期字符
      */
     private Date strParseToDate(String dateStr) {
         dateStr = StringUtils.trimToEmpty(StringUtils.replace(dateStr, "Date:", ""));
