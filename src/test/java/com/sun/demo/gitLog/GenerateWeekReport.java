@@ -13,10 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -145,6 +142,7 @@ public class GenerateWeekReport {
             }
             gitLogList.add(gitLog);
         }
+        Collections.reverse(gitLogList);
         return gitLogList;
     }
 
