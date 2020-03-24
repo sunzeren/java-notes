@@ -50,7 +50,7 @@ public class GetOfEntityTest {
         company.setLegalPerson("");
         company.setRegisteredCipital(0.0D);
         company.setRegistrationTime(new Date());
-        company.setPhone(new Date());
+        company.setPhone("14311110000");
         company.setAddress("");
 
         return JSONObject.toJSONString(company);

@@ -18,12 +18,14 @@ public class Company {
     private String legalPerson;
     private double registeredCipital;
     private Date registrationTime;
-    private Date phone;
+    private String phone;
     private String address;
 
+    private Company childCompany;
     private BeanFactory beanFactory;
 
     public Company() {
+        System.out.println("创建了Company实例");
     }
 
     public Company(int id) {
