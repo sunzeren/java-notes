@@ -1,4 +1,4 @@
-package com.sun.demo.base.proxy.jdk;
+package com.sun.demo.base.proxy;
 
 /**
  * @Author: ZeRen.
