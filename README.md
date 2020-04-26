@@ -1,9 +1,6 @@
 
-
-本项目基于springboot,集成了常用组件,并不定期持续更新
-
-目前集成了 mybatis,swagger,redis,cache
+本项目内涵各种 java相关的知识点实例,旨在学习java途中记录下的各种笔记
+如,spring源码解析分析代码,反射,代理,
+mybatis,redis,cache的各种配置
 springboot的请求解析方式
-springboot的缓存配置
-拦截器,
 微信公众号爬取等
