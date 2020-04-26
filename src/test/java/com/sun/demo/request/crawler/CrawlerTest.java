@@ -6,7 +6,6 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
 import javax.imageio.ImageIO;
@@ -18,7 +17,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
-import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -31,7 +29,6 @@ public class CrawlerTest {
 
     private final String FILE_PATH_PREFIX = "C:\\Users\\admin\\Desktop\\file\\";
     private static String FILE_PATH_DIR = null;
-    private static String ARTICLE_TITLE = null;
 
     public static void main(String[] args) {
 
@@ -47,12 +44,13 @@ public class CrawlerTest {
     private void getData(CrawlerTask crawlerTask) {
         try {
             Document document = Jsoup.connect(crawlerTask.getLink()).get();
-            initFileDir(document);
 
             Elements style = document.getElementsByTag("style");
             Element articleTitle = document.getElementById("activity-name");
             Element source = document.getElementById("js_name");
             Element content = document.getElementById("js_content");
+            // 初始化生成文件目录
+            initFileDir(articleTitle);
 
             if (content != null) {
                 Elements imgElements = content.getElementsByTag("img");
@@ -89,17 +87,15 @@ public class CrawlerTest {
 
         System.out.println(crawlerTask.getContent());
 
-        GenerateHtmlUtils.generate(crawlerTask.getContent(), FILE_PATH_PREFIX + FILE_PATH_DIR + "\\index.html", ARTICLE_TITLE);
+        GenerateHtmlUtils.generate(crawlerTask.getContent(), FILE_PATH_PREFIX + FILE_PATH_DIR + "\\index.html", crawlerTask.getTitle());
     }
 
-    private void initFileDir(Document document) {
-        final List<TextNode> textNodes = document.getElementById("activity-name").textNodes();
-        if (textNodes.isEmpty()) {
+    private void initFileDir(Element titleElement) {
+        if (titleElement == null) {
             return;
         }
         final String nowDate = DateFormatUtils.format(new Date(), "yyyy-MMdd");
-        final String title = textNodes.get(0).text().trim();
-        ARTICLE_TITLE = title;
+        final String title = titleElement.text();
         FILE_PATH_DIR = title + "(" + nowDate + ")";
     }
 
