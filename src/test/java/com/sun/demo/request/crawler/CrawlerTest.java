@@ -28,22 +28,31 @@ public class CrawlerTest {
 
 
     // 爬取资源所在的基础目录
-    private final String FILE_PATH_PREFIX = "C:\\Users\\admin\\Desktop\\crawler\\";
+    private static final String FILE_PATH_PREFIX = "C:\\Users\\admin\\Desktop\\crawler\\";
     // 对应基础目录,下的子分类,用于区分每个爬取的文章
     private static String FILE_PATH_DIR = null;
 
     public static void main(String[] args) {
 
-        final CrawlerTask task = new CrawlerTask();
-        task.setId("1");
-        //task.setLink("https://mp.weixin.qq.com/s/8Oo8PhijFxdjEYepZcNejw");
-        task.setLink("https://mp.weixin.qq.com/s/3uCQj0-WBXENZyr1mQ1mZQ");
+        String[] links = new String[]{
+                "https://mp.weixin.qq.com/s/8Oo8PhijFxdjEYepZcNejw",
+                "https://mp.weixin.qq.com/s/3uCQj0-WBXENZyr1mQ1mZQ",
+                "https://mp.weixin.qq.com/s/DFrqILXsVa8C8iXmNJWJfg",
+                "https://mp.weixin.qq.com/s/2Z7XhZ_BD0khQblIVoCvsw",
+                "https://mp.weixin.qq.com/s/ejr8sNE-CTDHHdPDW9Ed2g",
+        };
 
-        new CrawlerTest().getData(task);
+        for (int i = 0, linksLength = links.length; i < linksLength; i++) {
+            String link = links[i];
+            final CrawlerTask task = new CrawlerTask();
+            task.setId(String.valueOf(i + 1));
+            task.setLink(link);
+            crawling(task);
+        }
     }
 
 
-    private void getData(CrawlerTask crawlerTask) {
+    private static void crawling(CrawlerTask crawlerTask) {
         try {
             Document document = Jsoup.connect(crawlerTask.getLink()).get();
 
@@ -58,7 +67,7 @@ public class CrawlerTest {
                 Elements imgElements = content.getElementsByTag("img");
                 imgElements.forEach(img -> {
                     // 此处替换图片为本地,以避免直接访问微信图片时会被拦截,导致图片无法加载
-                    String imgUrl = this.saveFile(img.attr("data-src"), String.valueOf(System.currentTimeMillis()) + ".png");
+                    String imgUrl = saveFile(img.attr("data-src"), String.valueOf(System.currentTimeMillis()) + ".png");
                     img.attr("data-src", imgUrl);
                 });
 
@@ -77,7 +86,7 @@ public class CrawlerTest {
             if (StringUtils.isNotEmpty(styles)) {
                 int retryCount = 0;
                 do {
-                    fileName = this.saveFile(IOUtils.toInputStream(styles, StandardCharsets.UTF_8), crawlerTask.getId() + ".css");
+                    fileName = saveFile(IOUtils.toInputStream(styles, StandardCharsets.UTF_8), crawlerTask.getId() + ".css");
                     retryCount++;
                 } while (StringUtils.isEmpty(fileName) && retryCount <= 3);
             }
@@ -91,7 +100,7 @@ public class CrawlerTest {
         GenerateHtmlUtils.generate(crawlerTask.getContent(), FILE_PATH_PREFIX + FILE_PATH_DIR + "\\index.html", crawlerTask.getTitle());
     }
 
-    private void initFileDir(Element titleElement) {
+    private static void initFileDir(Element titleElement) {
         if (titleElement == null) {
             return;
         }
@@ -100,7 +109,7 @@ public class CrawlerTest {
         FILE_PATH_DIR = title + "(" + nowDate + ")";
     }
 
-    private String saveFile(InputStream inputStream, String fileName) {
+    private static String saveFile(InputStream inputStream, String fileName) {
 
         try {
             return writeToFile(inputStream, fileName);
@@ -111,7 +120,7 @@ public class CrawlerTest {
         return null;
     }
 
-    private String writeToFile(InputStream inputStream, String fileName) throws IOException {
+    private static String writeToFile(InputStream inputStream, String fileName) throws IOException {
         final File file = getDownloadFile(fileName);
         final FileOutputStream outputStream = new FileOutputStream(file);
         byte[] buff = new byte[1024 * 1000];
@@ -122,19 +131,19 @@ public class CrawlerTest {
         return file.getAbsolutePath();
     }
 
-    private File getDownloadFile(String fileName) {
+    private static File getDownloadFile(String fileName) {
         final String fileDir = FILE_PATH_PREFIX + FILE_PATH_DIR;
         final File dir = new File(fileDir);
         if (dir.exists()) {
             dir.delete();
         } else {
-            dir.mkdir();
+            dir.mkdirs();
         }
 
         return new File(fileDir + "\\" + fileName);
     }
 
-    private String saveFile(String imageUrl, String fileName) {
+    private static String saveFile(String imageUrl, String fileName) {
         try {
             final URL url = new URL(imageUrl);
             final BufferedImage read = ImageIO.read(url);
