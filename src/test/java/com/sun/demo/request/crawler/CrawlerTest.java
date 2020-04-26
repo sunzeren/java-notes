@@ -27,7 +27,9 @@ import java.util.stream.Collectors;
 public class CrawlerTest {
 
 
-    private final String FILE_PATH_PREFIX = "C:\\Users\\admin\\Desktop\\file\\";
+    // 爬取资源所在的基础目录
+    private final String FILE_PATH_PREFIX = "C:\\Users\\admin\\Desktop\\crawler\\";
+    // 对应基础目录,下的子分类,用于区分每个爬取的文章
     private static String FILE_PATH_DIR = null;
 
     public static void main(String[] args) {
@@ -55,11 +57,10 @@ public class CrawlerTest {
             if (content != null) {
                 Elements imgElements = content.getElementsByTag("img");
                 imgElements.forEach(img -> {
-                    // 此处替换图片为本地
+                    // 此处替换图片为本地,以避免直接访问微信图片时会被拦截,导致图片无法加载
                     String imgUrl = this.saveFile(img.attr("data-src"), String.valueOf(System.currentTimeMillis()) + ".png");
                     img.attr("data-src", imgUrl);
                 });
-
 
                 String contentData = content.html().replaceAll("%3A", ":").replaceAll("%2F", "/").replaceAll("%3F", "?").replaceAll("%3D", ".").replaceAll("data-(.*?=)", "$1");
                 crawlerTask.setContent(contentData);
