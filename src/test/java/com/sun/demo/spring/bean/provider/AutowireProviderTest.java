@@ -3,6 +3,7 @@ package com.sun.demo.spring.bean.provider;
 import com.sun.pojo.Company;
 import com.sun.pojo.SuperCompany;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -17,6 +18,7 @@ import java.util.List;
  * PS: Not easy to write code, please indicate.
  * 基于注解的spring 依赖注入
  */
+@Configurable
 public class AutowireProviderTest {
 
     @Autowired

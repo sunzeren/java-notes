@@ -3,9 +3,11 @@ package com.sun;
 import com.sun.listener.EnvironmentListener;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class DemoApplication {
+public class DemoApplication extends SpringBootServletInitializer {
 
     /**
      * 带有参数的启动方式
@@ -20,6 +22,14 @@ public class DemoApplication {
     }
 
     ///**
+
+    /**
+     * 重写此方法用于打包
+     */
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        return builder.sources(DemoApplication.class);
+    }
     // * 极简的启动方式
     // *
     // * @param args
