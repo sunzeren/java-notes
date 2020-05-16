@@ -19,7 +19,7 @@ public class ValidatorBean {
     @NotNull
     private String name;
     @NotEmpty
-    @Length(max = 2,min = 1)
+    @Length(max = 2, min = 1)
     private String gender;
     private String idCard;
 }

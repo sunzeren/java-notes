@@ -8,6 +8,10 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 
 import java.io.IOException;
 
+enum MyEnum {
+    V1, V2, V3, @JsonEnumDefaultValue Default
+}
+
 /**
  * 转换不存在的枚举使用默认值替代
  */
@@ -47,9 +51,5 @@ class EnumData {
                 "myEnum=" + myEnum +
                 '}';
     }
-}
-
-enum MyEnum {
-    V1, V2, V3, @JsonEnumDefaultValue Default
 }
 

@@ -21,7 +21,7 @@ public class ProxyInvocationHandlerTest implements InvocationHandler {
         this.target = target;
     }
 
-    public void changeTarget(Object target){
+    public void changeTarget(Object target) {
         this.target = target;
     }
 

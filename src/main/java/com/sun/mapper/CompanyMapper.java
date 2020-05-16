@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Options;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -31,8 +30,11 @@ public class CompanyMapper {
         return jdbcTemplate.update("delete from tb_company where id =" + companyId);
     }
 
-    /** 注解执行sql语句 */
+    /**
+     * 注解执行sql语句
+     */
     @Insert("insert into tb_company(id, name, legalPerson, registeredCipital, registrationTime,phone,address) values (#{id}, #{name}, #{legalPerson}, #{registeredCipital}, #{registrationTime},#{phone},#{address})")
-    @Options(useGeneratedKeys = true, keyProperty="id")
-    public void addCompany(Company company){}
+    @Options(useGeneratedKeys = true, keyProperty = "id")
+    public void addCompany(Company company) {
+    }
 }

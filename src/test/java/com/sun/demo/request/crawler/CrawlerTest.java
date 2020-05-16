@@ -67,7 +67,7 @@ public class CrawlerTest {
                 Elements imgElements = content.getElementsByTag("img");
                 imgElements.forEach(img -> {
                     // 此处替换图片为本地,以避免直接访问微信图片时会被拦截,导致图片无法加载
-                    String imgUrl = saveFile(img.attr("data-src"), String.valueOf(System.currentTimeMillis()) + ".png");
+                    String imgUrl = saveFile(img.attr("data-src"), System.currentTimeMillis() + ".png");
                     img.attr("data-src", imgUrl);
                 });
 

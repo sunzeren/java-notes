@@ -9,7 +9,6 @@ import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 
-import javax.annotation.PostConstruct;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +30,7 @@ public class CacheConfig {
     /**
      * CacheConfig中仅保留 --- 分析 --- 中的代码,运行后,即可查看CacheManager的默认SpringBoot 注入的Bean的配置方式
      * ide 点击 下面@Autowired 注入的CacheManager 左侧的绿色圆圈里有箭头的按钮,进入SpringBoot 配置Bean的默认方法
-     *      ps:此处的CacheManager正是SpringBoot自动配置 auto-config,约定大于配置的体现
+     * ps:此处的CacheManager正是SpringBoot自动配置 auto-config,约定大于配置的体现
      * 观察得知,须有一个 ResourceLoader 传入,在 RedisCacheConfiguration 中的 valueSerializationPair ,即序列化键的value时使用此ClassLoader
      * 以上,问题得以解决
      * 总结: 本次经历虽耗费半天时间,但却体现了个SpringBoot配置问题的解决思路,仅此记录,望抛砖引玉

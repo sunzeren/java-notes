@@ -9,7 +9,9 @@ import java.util.List;
  * PS: Not easy to write code, please indicate.
  */
 public interface CompanyService {
-    List<Company>  selectAllCompany();
+    List<Company> selectAllCompany();
+
     int removeByCompanyID(int companyId);
+
     void addCompany(Company company);
 }

@@ -39,13 +39,13 @@ public class CompanyServiceImpl implements CompanyService {
 
 
     /**
+     * @return
      * @Author SuZeRen
      * @Description //TODO service进行 业务逻辑处理
      * @Date 11:55 2018/9/3
-     * @Param 
-     * @return 
+     * @Param
      **/
-    public void someService(){
+    public void someService() {
         otherService.someService();
     }
 }
