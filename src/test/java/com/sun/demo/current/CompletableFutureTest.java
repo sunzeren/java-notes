@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
  * <p>
  * 使用 CompletableFuture 完成最优的烧水泡茶程序
  */
-public class CompletableFutureTest {
+public class CompletableFutureTest extends ThreadTest {
 
     public static void main(String[] args) {
 
@@ -47,10 +47,4 @@ public class CompletableFutureTest {
         System.out.println(f3.join());
     }
 
-    public static void sleep(int t, TimeUnit u) {
-        try {
-            u.sleep(t);
-        } catch (InterruptedException e) {
-        }
-    }
 }
