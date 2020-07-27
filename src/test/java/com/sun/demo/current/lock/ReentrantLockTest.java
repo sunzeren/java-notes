@@ -13,7 +13,7 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class ReentrantLockTest extends ThreadTest {
 
-
+    private static final Object lock = new Object();
     // 可重入锁
     private Lock reentrantLock = new ReentrantLock();
 
@@ -52,6 +52,37 @@ public class ReentrantLockTest extends ThreadTest {
         }
 
         System.out.println("is done");
+    }
+
+    @Test
+    public void syncTest() {
+        final Thread thread_1 = new Thread(() -> {
+            synchronized (lock) {
+                log("第一次获取锁");
+                synchronized (lock) {
+                    log("第二次获取锁");
+                    sleep(2, TimeUnit.SECONDS);
+                }
+                // synchronized代码块 执行完毕后会自动释放锁
+                log("释放了锁");
+            }
+            log("释放了锁");
+        });
+        thread_1.start();
+
+        sleep(1, TimeUnit.SECONDS);
+
+
+        //region main blocking
+        synchronized (lock) {
+            log("获取了锁");
+            sleep(1, TimeUnit.SECONDS);
+        }
+        log("释放了锁");
+        //endregion
+
+        System.out.println("is done");
+
     }
 
 }
