@@ -10,6 +10,10 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * @Author: ZeRen.
  * @Date: 2020/7/27 14:58
+ *
+ * ReentrantLock 即可重入锁
+ * 与java的synchronized关键字,极其相似,不过其提供更多灵活操作
+ * 如在构造方法中可指定,是否为公平锁(即总是等待时间最长的线程获取此锁),默认为非公平锁
  */
 public class ReentrantLockTest extends ThreadTest {
 
