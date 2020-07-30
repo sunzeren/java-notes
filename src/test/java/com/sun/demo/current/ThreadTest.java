@@ -16,7 +16,7 @@ public class ThreadTest {
         }
     }
 
-    protected void log(String message) {
+    protected static void log(String message) {
         System.out.println(Thread.currentThread().getName() + ":" + message);
     }
 
