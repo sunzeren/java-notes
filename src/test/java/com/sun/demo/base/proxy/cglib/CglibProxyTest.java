@@ -1,7 +1,7 @@
 package com.sun.demo.base.proxy.cglib;
 
 import com.sun.demo.base.proxy.SayHello;
-import com.sun.demo.base.proxy.SayHelloImpl;
+import com.sun.demo.base.proxy.ProxyObject;
 import org.springframework.cglib.proxy.Enhancer;
 
 /**
@@ -23,7 +23,7 @@ public class CglibProxyTest {
         //e.setCallback(new MyMethodInterceptor(new SayHelloImpl()));
         //o = e.create();
         // 官方推荐使用以上写法,因为此静态方法生成代理对象有局限性
-        o = Enhancer.create(SayHelloImpl.class, new MyMethodInterceptor(new SayHelloImpl()));
+        o = Enhancer.create(ProxyObject.class, new MyMethodInterceptor(new ProxyObject()));
 
         if (o instanceof SayHello) {
             ((SayHello) o).say("I love you");

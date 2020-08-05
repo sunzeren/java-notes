@@ -28,7 +28,7 @@ public class ProxyInvocationHandlerTest implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 
-        log.info("调用方法:{},方法参数:{}", method.getName(), args);
+        log.info("方法拦截--->调用方法:{},方法参数:{}", method.getName(), args);
         return method.invoke(target, args);
     }
 

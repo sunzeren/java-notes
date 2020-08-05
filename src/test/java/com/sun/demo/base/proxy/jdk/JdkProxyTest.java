@@ -1,6 +1,7 @@
 package com.sun.demo.base.proxy.jdk;
 
 import com.sun.demo.base.proxy.OtherInterface;
+import com.sun.demo.base.proxy.ProxyObject;
 import com.sun.demo.base.proxy.SayHello;
 
 import java.lang.reflect.Proxy;
@@ -16,11 +17,11 @@ public class JdkProxyTest {
     public static void main(String[] args) {
 
         // 创建一个代理实现实例
-        final ProxyInvocationHandlerTest proxyInvocationHandlerTest = new ProxyInvocationHandlerTest(new SayHello() {
-            @Override
-            public void say(String text) {
-                System.out.println("You say:" + text);
-            }
+        final ProxyInvocationHandlerTest proxyInvocationHandlerTest = new ProxyInvocationHandlerTest(new ProxyObject() {
+            //@Override
+            //public void say(String text) {
+            //    System.out.println("You say:" + text);
+            //}
         });
 
         // 返回代理对象
@@ -34,7 +35,7 @@ public class JdkProxyTest {
 
         if (o instanceof OtherInterface) {
             //proxyInvocationHandlerTest.changeTarget((OtherInterface) () -> { });
-            ((OtherInterface) o).textMethod();
+            ((OtherInterface) o).testMethod();
         }
     }
 
