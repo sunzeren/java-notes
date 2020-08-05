@@ -22,9 +22,9 @@ public class MyMethodInterceptor implements MethodInterceptor {
     }
 
     @Override
-    public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
-        log.info("调用方法:{},方法参数:{}", method.getName(), objects);
-        return method.invoke(target, objects);
+    public Object intercept(Object o, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
+        log.info("调用方法:{},方法参数:{}", method.getName(), args);
+        return method.invoke(target, args);
     }
 
 }
