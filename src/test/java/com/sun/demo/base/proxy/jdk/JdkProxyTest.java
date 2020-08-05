@@ -11,6 +11,14 @@ import java.lang.reflect.Proxy;
  * @Date: 2020/4/7 15:16
  * jdk的动态代理实现
  * jdk的动态代理只能代理实现接口
+ *
+ * jdk 动态代理需要相关类:
+ * InvocationHandler:给代理对象增强的类,需要实现此接口
+ * Proxy:
+ * 用来创建代理对象,
+ * 判断一个类是否为代理对象,
+ * 获取一个代理对象的增强器(InvocationHandler),
+ * 获取代理对象的class对象
  */
 public class JdkProxyTest {
 
