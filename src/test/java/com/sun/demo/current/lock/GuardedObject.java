@@ -1,5 +1,7 @@
 package com.sun.demo.current.lock;
 
+import com.alibaba.dubbo.remoting.exchange.support.DefaultFuture;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
@@ -8,6 +10,22 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Predicate;
 
+/**
+ * 此类为 Guarded Suspension(守卫,挂起)  模式 的典型实现
+ * 其本质上是一种等待唤醒机制的实现
+ *
+ *
+ *
+ * <p>
+ * Guarded Suspension 模式也常被称作 Guarded Wait 模式、Spin Lock 模式（因为使用了 while 循环去等待），这些名字都很形象，
+ * 不过它还有一个更形象的非官方名字：多线程版本的 if
+ *
+ * <p>
+ * 官方案例实现可参考
+ * {@link DefaultFuture}
+ *
+ * @param <T> 需要被保护的对象
+ */
 public class GuardedObject<T> {
     //保存所有GuardedObject
     final static Map<Object, GuardedObject> gos = new ConcurrentHashMap<>();
