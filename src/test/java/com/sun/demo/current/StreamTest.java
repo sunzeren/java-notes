@@ -1,8 +1,15 @@
 package com.sun.demo.current;
 
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Stream;
 
 /**
  * @Author: ZeRen.
@@ -40,5 +47,25 @@ public class StreamTest {
 
         Integer product2 = lists.parallelStream().reduce(1, (a, b) -> a * b);//这里把stream()换成了parallelStream（）
         System.out.println("list的积为:" + product2);//720
+    }
+
+
+    @Test
+    public void blockingQueue() {
+        final List<String> elementList = new ArrayList<>();
+        for (int i = 0; i < 1000000; i++) {
+            elementList.add(String.valueOf(i + 1));
+        }
+        //ArrayBlockingQueue<String> queue = new ArrayBlockingQueue<>(1000000, false, elementList);
+        BlockingQueue<String> queue = new LinkedBlockingQueue<>(elementList);
+        AtomicInteger counter = new AtomicInteger(1);
+        Stream.generate(counter::incrementAndGet).limit(1000000).parallel().forEach((e) -> {
+            try {
+                final String element = queue.take();
+                System.out.println("出队序号:" + e + "线程:" + Thread.currentThread().getName() + ",出队元素:" + element);
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
+        });
     }
 }
