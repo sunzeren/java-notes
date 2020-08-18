@@ -36,7 +36,7 @@ public class EchoServiceTest {
                         // 写Socket
                         ByteBuffer wb =
                                 (ByteBuffer) rb.flip();
-                        sc.write(ByteBuffer.wrap("这里是服务端:[".getBytes()));
+                        sc.write(ByteBuffer.wrap("这里是服务端:[\r\n".getBytes()));
                         sc.write(wb);
                         sc.write(ByteBuffer.wrap("]".getBytes()));
                         // 关闭Socket
