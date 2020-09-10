@@ -11,7 +11,9 @@ import lombok.Data;
 @Data
 public class SitProjectEntity {
     private String id;
+    private Integer sort;
     private String url;
+    private String backgroundUrl;
     private String header;
     private String content;
     private String footer;

@@ -212,15 +212,15 @@ figure {
     padding: 20vh 0;
 }
 
-.slide--1 {
+.slide--0 {
     align-items: flex-start;
 }
 
-.slide--2 {
+.slide--1 {
     align-items: flex-end;
 }
 
-.slide--3 {
+.slide--2 {
     align-items: center;
 }
 

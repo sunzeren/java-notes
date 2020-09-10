@@ -19,9 +19,9 @@ public class IndexController {
     public String index(Model model) {
         model.addAttribute("sitUrl", "http://honeyze.ren");
         List<SitProjectEntity> projectList = new ArrayList<>();
-        projectList.add(new SitProjectEntity("0", "http://blog.honeyze.ren", "Informal", "Blog Notes", "Learning"));
-        projectList.add(new SitProjectEntity("1", "https://blog.csdn.net/HoneyZe", "diary", "CSDN", ""));
-        projectList.add(new SitProjectEntity("2", "https://github.com/sunzeren", "Project", "Github", "Some skill"));
+        projectList.add(new SitProjectEntity("0", 0, "http://blog.honeyze.ren", "http://demo.htmleaf.com/2001/202001083698/img/project-one.jpg", "Informal", "Blog Notes", "Learning"));
+        projectList.add(new SitProjectEntity("1", 1, "https://blog.csdn.net/HoneyZe", "http://demo.htmleaf.com/2001/202001083698/img/project-two.jpg", "diary", "CSDN", ""));
+        projectList.add(new SitProjectEntity("2", 2, "https://github.com/sunzeren", "http://demo.htmleaf.com/2001/202001083698/img/project-three.jpg", "Project", "Github", "Some skill"));
         model.addAttribute("projectList", projectList);
         return "index";
     }

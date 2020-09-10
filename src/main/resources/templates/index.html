@@ -6,7 +6,6 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Honey Ze</title>
     <link href="css/normalize.css" rel="stylesheet" type="text/css"/><!--CSS RESET-->
-    <!--	<link rel="stylesheet" type="text/css" href="css/htmleaf-demo.css">&lt;!&ndash;演示页面样式，使用时可以不引用&ndash;&gt;-->
     <link href="./css/style.css" rel="stylesheet">
 </head>
 <body>
@@ -40,28 +39,12 @@
 
     <nav class="filter">
         <ul class="filter__list">
-            <li class="filter__item">
-                <a class="filter__link is-active js-trigger" href="#">
-                    <div area-hidden class="filter__link-mask"><span>Interiors</span></div>
-                    Interiors
-                </a>
-            </li>
-            <li class="filter__item">
-                <a class="filter__link js-trigger" href="#">
-                    <div area-hidden class="filter__link-mask"><span>Residential</span></div>
-                    Residential
-                </a>
-            </li>
-            <li class="filter__item">
-                <a class="filter__link js-trigger" href="#">
-                    <div area-hidden class="filter__link-mask"><span>Commercial</span></div>
-                    Commercial
-                </a>
-            </li>
-            <li class="filter__item">
-                <a class="filter__link js-trigger" href="#">
-                    <div area-hidden class="filter__link-mask"><span>Installation</span></div>
-                    Installation
+            <li class="filter__item" th:each="item:${projectList}">
+                <a class="filter__link is-active js-trigger" th:href="${item.url}">
+                    <div area-hidden class="filter__link-mask">
+                        <span th:text="${item.content}"></span>
+                    </div>
+                    <span th:text="${item.content}"></span>
                 </a>
             </li>
         </ul>
@@ -69,128 +52,35 @@
 
     <div class="scroll-content" data-scroll-content>
 
-        <article class="slide slide--1 js-slide">
+        <article class="slide  js-slide" th:class="'slide js-slide slide--' + ${item.sort % 3}"
+                 th:each="item:${projectList}"
+        >
             <div class="slide__inner">
                 <div class="slide__img js-transition-img">
                     <figure class="js-transition-img__inner">
-                        <img draggable="false" src="img/project-one.jpg">
+                        <img draggable="false" th:src="${item.backgroundUrl}">
                     </figure>
                 </div>
             </div>
         </article>
 
-        <article class="slide slide--2 js-slide">
-            <div class="slide__inner">
-                <div class="slide__img js-transition-img">
-                    <figure class="js-transition-img__inner">
-                        <img draggable="false" src="img/project-two.jpg">
-                    </figure>
-                </div>
-            </div>
-        </article>
-
-        <article class="slide slide--3 js-slide">
-            <div class="slide__inner">
-                <div class="slide__img">
-                    <figure>
-                        <img draggable="false" src="img/project-three.jpg">
-                    </figure>
-                </div>
-            </div>
-        </article>
-
-        <!--    <article class="slide slide&#45;&#45;1 js-slide">-->
-        <!--      <div class="slide__inner">-->
-        <!--        <div class="slide__img">-->
-        <!--          <figure>-->
-        <!--            <img src="img/project-one.jpg" draggable="false">-->
-        <!--          </figure>-->
-        <!--        </div>-->
-        <!--      </div>-->
-        <!--    </article>-->
-        <!--    -->
-        <!--    <article class="slide slide&#45;&#45;2 js-slide">-->
-        <!--      <div class="slide__inner">-->
-        <!--        <div class="slide__img">-->
-        <!--          <figure>-->
-        <!--            <img src="img/project-two.jpg" draggable="false">-->
-        <!--          </figure>-->
-        <!--        </div>-->
-        <!--      </div>-->
-        <!--    </article>-->
-        <!--    -->
-        <!--    <article class="slide slide&#45;&#45;3 js-slide">-->
-        <!--      <div class="slide__inner">-->
-        <!--        <div class="slide__img">-->
-        <!--          <figure>-->
-        <!--            <img src="img/project-three.jpg" draggable="false">-->
-        <!--          </figure>-->
-        <!--        </div>-->
-        <!--      </div>-->
-        <!--    </article>-->
 
     </div>
 
     <div class="scroll-content scroll-content--last" data-scroll-content>
 
-        <article class="slide slide--1 js-slide">
+        <article class="slide js-slide" th:class="'slide js-slide slide--' + ${item.sort % 3}"
+                 th:each="item:${projectList}"
+        >
             <div class="slide__inner">
-                <div class="slide__sub-title"><span>Project</span></div>
+                <div class="slide__sub-title"><span th:text="${item.header}"></span></div>
                 <h1 class="slide__title">
-                    <div class="js-transition-title">Oak Refuge</div>
+                    <div class="js-transition-title" th:text="${item.content}">Oak Refuge</div>
                 </h1>
                 <div class="slide__img slide__img--proxy"></div>
-                <div class="slide__project">Corpus Studio</div>
+                <div class="slide__project" th:text="${item.footer}">Corpus Studio</div>
             </div>
         </article>
-
-        <article class="slide slide--2 js-slide">
-            <div class="slide__inner">
-                <div class="slide__sub-title"><span>Project</span></div>
-                <h1 class="slide__title">
-                    <div class="js-transition-title">Teton Residence</div>
-                </h1>
-                <div class="slide__img slide__img--proxy"></div>
-                <div class="slide__project">Ro Rocket Design</div>
-            </div>
-        </article>
-
-        <article class="slide slide--3 js-slide">
-            <div class="slide__inner">
-                <div class="slide__sub-title"><span>Project</span></div>
-                <h1 class="slide__title">Oak Refuge</h1>
-                <div class="slide__img slide__img--proxy"></div>
-                <div class="slide__project">Corpus Studio</div>
-            </div>
-        </article>
-
-        <!--    <article class="slide slide&#45;&#45;1 js-slide">-->
-        <!--      <div class="slide__inner">-->
-        <!--        <div class="slide__sub-title"><span>Project</span></div>-->
-        <!--        <h1 class="slide__title">Teton Residence</h1>-->
-        <!--        <div class="slide__img slide__img&#45;&#45;proxy"></div>-->
-        <!--        <div class="slide__project">Ro Rocket Design</div>-->
-        <!--      </div>-->
-        <!--    </article>-->
-        <!--    -->
-        <!--    <article class="slide slide&#45;&#45;2 js-slide">-->
-        <!--      <div class="slide__inner">-->
-        <!--        <div class="slide__sub-title"><span>Project</span></div>-->
-        <!--        <h1 class="slide__title">Oak Refuge</h1>-->
-        <!--        <div class="slide__img slide__img&#45;&#45;proxy"></div>-->
-        <!--        <div class="slide__project">Corpus Studio</div>-->
-        <!--      </div>-->
-        <!--    </article>-->
-        <!--    -->
-        <!--    <article class="slide slide&#45;&#45;3 js-slide">-->
-        <!--      <div class="slide__inner">-->
-        <!--        <div class="slide__sub-title"><span>Project</span></div>-->
-        <!--        <h1 class="slide__title">Teton Residence</h1>-->
-        <!--        <div class="slide__img slide__img&#45;&#45;proxy"></div>-->
-        <!--        <div class="slide__project">Ro Rocket Design</div>-->
-        <!--      </div>-->
-        <!--    </article>-->
-
     </div>
 
     <div class="scrollbar" data-scrollbar>
@@ -213,7 +103,7 @@
     </div>
 </div>
 
-<!--<script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js'></script>-->
+<script src='js/TweenMax.min.js'></script>
 <script src='js/imagesloaded.pkgd.min.js'></script>
 <script src="js/script.js"></script>
 </body>
