@@ -11,13 +11,13 @@
 <body>
 
 <figure class="logo logo--top js-trigger">
-    <img src="img/logo.svg">
+    <img src="img/logo.png">
 </figure>
 
 <a class="resize" target="_blank" th:href="${sitUrl}">
     <div class="resize__inner">
         <figure class="logo logo--resize">
-            <img src="img/logo.svg">
+            <img src="img/logo.png">
         </figure>
         <p>Please view in <span>full page</span> mode</p>
     </div>
@@ -41,7 +41,7 @@
         <ul class="filter__list">
             <li class="filter__item" th:each="item:${projectList}">
                 <a class="filter__link is-active js-trigger" th:href="${item.url}">
-                    <div area-hidden class="filter__link-mask">
+                    <div area-hidden class="filter__link-mask" th:onclick="jumpUrl([[${item.url}]]);">
                         <span th:text="${item.content}"></span>
                     </div>
                     <span th:text="${item.content}"></span>
@@ -95,7 +95,7 @@
     <div class="mask__slice js-mask__slice"></div>
     <div class="mask__inner">
         <figure class="logo logo--mask">
-            <img class="js-logo" src="img/logo.svg">
+            <img class="js-logo" src="img/logo.png">
         </figure>
         <div class="mask-line js-mask-line">
             <div class="mask-line__inner js-mask-line"></div>
@@ -106,5 +106,13 @@
 <script src='js/TweenMax.min.js'></script>
 <script src='js/imagesloaded.pkgd.min.js'></script>
 <script src="js/script.js"></script>
+<script>
+    function jumpUrl(url) {
+        if (!url) {
+            return;
+        }
+        window.open(url);
+    }
+</script>
 </body>
 </html>
