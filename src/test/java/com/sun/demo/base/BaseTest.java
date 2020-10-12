@@ -57,6 +57,14 @@ public class BaseTest {
         // 内存回收。这里，会回收WeakHashMap中与“w1”对应的键值对
         System.gc();
 
+        //region 因为gc的执行是异步的，所以等待一段时间
+        try {
+            Thread.sleep(1000 * 3);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //endregion
+
         // 遍历WeakHashMap
         Iterator<Map.Entry<String, String>> iter = wMap.entrySet().iterator();
         while (iter.hasNext()) {
