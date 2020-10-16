@@ -77,7 +77,7 @@
                 <h1 class="slide__title">
                     <div class="js-transition-title" th:text="${item.content}">Oak Refuge</div>
                 </h1>
-                <div class="slide__img slide__img--proxy"></div>
+                <div class="slide__img slide__img--proxy" th:onclick="jumpUrl([[${item.url}]]);"></div>
                 <div class="slide__project" th:text="${item.footer}">Corpus Studio</div>
             </div>
         </article>
