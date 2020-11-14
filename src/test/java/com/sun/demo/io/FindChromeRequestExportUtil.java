@@ -31,7 +31,7 @@ public class FindChromeRequestExportUtil {
 
     @Before
     public void init() throws IOException {
-        ClassPathResource resource = new ClassPathResource("file/chrome-request-export.json");
+        ClassPathResource resource = new ClassPathResource("file/log.can-dao.com.har");
         content = StreamUtils.copyToString(resource.getInputStream(), Charset.defaultCharset());
     }
 
@@ -104,7 +104,7 @@ public class FindChromeRequestExportUtil {
             JSONObject jsonResponse = response.getJSONObject("content").getJSONObject("text");
             responseList.add(jsonResponse);
         }
-        // 汇总响应数组
+        // 汇总解析接口响应数据
         responseList = mergeResponse(responseList);
         //endregion
 
