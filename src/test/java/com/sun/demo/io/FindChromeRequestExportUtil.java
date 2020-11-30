@@ -8,7 +8,9 @@ import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.StreamUtils;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -31,8 +33,9 @@ public class FindChromeRequestExportUtil {
 
     @Before
     public void init() throws IOException {
-        ClassPathResource resource = new ClassPathResource("file/log.can-dao.com.har");
-        content = StreamUtils.copyToString(resource.getInputStream(), Charset.defaultCharset());
+//        InputStream in = new ClassPathResource("file/log.can-dao.com.har").getInputStream();
+        FileInputStream inputStream = new FileInputStream("C:\\Users\\admin\\Desktop\\log.can-dao.com.har");
+        content = StreamUtils.copyToString(inputStream, Charset.defaultCharset());
     }
 
 
@@ -71,8 +74,8 @@ public class FindChromeRequestExportUtil {
     @Test
     public void findChromeRequestExportOfJson() {
 
-        //region 关键信息匹配
-        String keyContentPattern = "orderId=\\[\\d*]";
+        //region 日志信息,关键信息匹配正则
+        String msgKeyContentPattern = "orderId=\\[\\d*]";
         //endregion
 
         //region 自定义过滤条件
@@ -109,7 +112,7 @@ public class FindChromeRequestExportUtil {
         //endregion
 
 
-        Pattern patternRex = Pattern.compile(keyContentPattern);
+        Pattern patternRex = Pattern.compile(msgKeyContentPattern);
         // 解析响应处理
         for (JSONObject responseItem : responseList) {
             // 待解析内容
@@ -141,6 +144,9 @@ public class FindChromeRequestExportUtil {
      * @param entriesArray 待处理类目
      */
     private void predicateProcess(Predicate<String> predicate, JSONArray entriesArray) {
+        if (predicate == null) {
+            return;
+        }
         final Iterator<Object> each = entriesArray.iterator();
         while (each.hasNext()) {
             Object next = each.next();
