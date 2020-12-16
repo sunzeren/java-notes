@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.Iterator;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.WeakHashMap;
 
 /**
@@ -73,5 +74,25 @@ public class BaseTest {
         }
         // 打印WeakHashMap的实际大小
         System.out.printf(" after gc WeakHashMap size:%s\n", wMap.size());
+    }
+
+
+    @Test
+    public void treeMap() {
+
+        // 运行发现, TreeMap 默认情况下(可以通过构造器传入Comparator)是以 Key的排序来排序的,
+        // 如 data.firstKey()会返回 Key最小的一个键
+        TreeMap<Object, Object> data = new TreeMap<>();
+
+        data.put(2, "1");
+        data.put(5, "2");
+        data.put(12, "我是最大的");
+        data.put(0, "key为0的Value");
+        data.put(1, "5");
+        data.put(-1, "我是最小的");
+
+        // 将会返回 Key最小的键值
+        System.out.println(data.get(data.firstKey()));
+
     }
 }
