@@ -5,12 +5,10 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.StreamUtils;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -34,7 +32,8 @@ public class FindChromeRequestExportUtil {
     @Before
     public void init() throws IOException {
 //        InputStream in = new ClassPathResource("file/log.can-dao.com.har").getInputStream();
-        FileInputStream inputStream = new FileInputStream("C:\\Users\\admin\\Desktop\\log.can-dao.com.har");
+//        FileInputStream inputStream = new FileInputStream("C:\\Users\\admin\\Desktop\\2020-11-21.har");
+        FileInputStream inputStream = new FileInputStream("C:\\Users\\admin\\Desktop\\订单指派.har");
         content = StreamUtils.copyToString(inputStream, Charset.defaultCharset());
     }
 
@@ -80,7 +79,11 @@ public class FindChromeRequestExportUtil {
 
         //region 自定义过滤条件
         // 需要解析的requestUrl
-        String requestUrl = "https://log.can-dao.com/log/syslog";
+
+        // QC日志
+        //        String requestUrl = "https://log.can-dao.com/log/syslog";
+        // QC 标准版环境
+        String requestUrl = "http://139.9.120.173:4000";
         // 过滤条件
         Predicate<String> predicate = s -> s.contains(requestUrl);
         //endregion
