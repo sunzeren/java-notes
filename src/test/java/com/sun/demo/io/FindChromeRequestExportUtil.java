@@ -71,7 +71,7 @@ public class FindChromeRequestExportUtil {
 
 
     @Test
-    public void findChromeRequestExportOfJson() {
+    public void findLogFormHarFile() {
 
         //region 日志信息,关键信息匹配正则
         String msgKeyContentPattern = "orderId=\\[\\d*]";

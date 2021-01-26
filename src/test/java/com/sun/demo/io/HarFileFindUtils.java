@@ -71,10 +71,32 @@ public class HarFileFindUtils {
 
     }
 
+
+    @Test
+    public void findData() {
+        String regx = "\\\\\"data\\\\\":.*?([(?=])";
+
+//        范围查找
+//        String regx = "(?<=\\{token\\=\\').+(?=', horseman=)";
+//        String regx = "\\\\\"data\\\\\":.*?(?<=])";
+        Pattern patternRex = Pattern.compile(regx);
+        for (String line : lines) {
+            Matcher matcher = patternRex.matcher(line);
+            while (matcher.find()) {
+                results.add(matcher.group());
+            }
+        }
+        System.out.println(results);
+    }
+
+
     @Test
     public void diff() throws IOException {
-        FileInputStream mcdInput = new FileInputStream("E:\\work\\project\\my-github\\java-notes\\src\\test\\java\\com\\sun\\demo\\base\\mcdRequestURI");
-        FileInputStream commonInput = new FileInputStream("E:\\work\\project\\my-github\\java-notes\\src\\test\\java\\com\\sun\\demo\\base\\nomoreRequestURI");
+        String filePath1 = "E:\\work\\project\\my-github\\java-notes\\src\\test\\java\\com\\sun\\demo\\base\\mcdRequestURI";
+        String filePath2 = "E:\\work\\project\\my-github\\java-notes\\src\\test\\java\\com\\sun\\demo\\base\\nomoreRequestURI";
+
+        FileInputStream mcdInput = new FileInputStream(filePath1);
+        FileInputStream commonInput = new FileInputStream(filePath2);
         List<String> mcdLines = IOUtils.readLines(mcdInput, Charset.defaultCharset()).stream().distinct().collect(Collectors.toList());
         List<String> generalLines = IOUtils.readLines(commonInput, Charset.defaultCharset()).stream().distinct().collect(Collectors.toList());
 
