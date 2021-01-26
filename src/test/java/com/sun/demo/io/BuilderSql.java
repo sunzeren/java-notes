@@ -1,7 +1,10 @@
 package com.sun.demo.io;
 
+import com.google.common.collect.Iterables;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.assertj.core.util.Arrays;
+import org.assertj.core.util.Lists;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 
@@ -17,54 +20,57 @@ import java.util.List;
  */
 public class BuilderSql {
 
-    private static final String SHOP_ID_MARK = "#{shopId}";
-    private static final String COMPANY_ID_MARK = "#{companyId}";
-
-    // 商品ID
-    private static final String GOODS_ID = "bf9a08153f0e4b52a2cc2cb0869d3352";
-    // 规格ID
-    private static final String SPEC_ID = "efce4481baab4f57beee5da760acc223";
-
-    // 楼层生成记录模板
-    private static final String INSERT_FLOOR_SQL_TEMPLATE =
-            "INSERT INTO ds_shop_floor_goods ( `id`, `floor_id`, `goods_id`, `sort_`, `shop_id`, `user_id`, `update_time`, `update_by`, `specification_id`, `company_id` ) VALUES ( uuid(), '6f1965a64c9d4acba02e7ce523ea2bc8', '" + GOODS_ID + "', '0', '" + SHOP_ID_MARK + "', NULL, now(), NULL, '" + SPEC_ID + "', '" + COMPANY_ID_MARK + "' );";
-
-    // 推荐表生成记录模板
-    private static final String INSERT_RECOMMEND_SQL_TEMPLATE =
-            "INSERT INTO `ds_goods_info_recommend` ( `id`, `delivery`, `num`, `company_id`, `goods_id`, `specifications_id`, `create_date`, `update_date`, `check_time`, `place_status`, `shelf_status` ) VALUES ( uuid(), '2', '0', '#{companyId}', 'bf9a08153f0e4b52a2cc2cb0869d3352', '" + SPEC_ID + "',  now(), now(), now(), '1', '1' );";
+    // sql模板
 
     public static void main(String[] args) throws IOException {
-        String outputPath = "C:\\Users\\Sun\\Desktop";
+        String outputFile = "C:\\Users\\admin\\Desktop\\result.sql";
 
-        ClassPathResource resource = new ClassPathResource("file/excel所有经销商信息");
-        List<String> companyList = IOUtils.readLines(resource.getInputStream(), "UTF-8");
+        ClassPathResource resource = new ClassPathResource("file/temp");
+        List<String> sourceDataList = IOUtils.readLines(resource.getInputStream(), "UTF-8");
 
-        List<String> floorSqlList = new ArrayList<>();
-        List<String> recommendSqlList = new ArrayList<>();
-        replaceMark(companyList, floorSqlList, INSERT_FLOOR_SQL_TEMPLATE);
-        replaceMark(companyList, recommendSqlList, INSERT_RECOMMEND_SQL_TEMPLATE);
+        String resultSql = paddedPartitionHandel(sourceDataList);
 
-        String floorSql = StringUtils.join(floorSqlList, "\n");
-        String recommendSql = StringUtils.join(recommendSqlList, "\n");
-
-        IOUtils.write(floorSql, new FileOutputStream(outputPath + "\\商品楼层脚本.sql"), "UTF-8");
-        IOUtils.write(recommendSql, new FileOutputStream(outputPath + "\\推荐商品表脚本.sql"), "UTF-8");
+        IOUtils.write(resultSql, new FileOutputStream(outputFile), "UTF-8");
     }
 
-    private static void replaceMark(List<String> companyList, List<String> realSqlList, String sqlTemplate) {
-        for (String companyInfo : companyList) {
-            if (StringUtils.isEmpty(companyInfo)) {
-                continue;
-            }
-            if (companyInfo.startsWith("-")) {
-                continue;
-            }
-            String[] infos = companyInfo.split(",");
-            String shopId = infos[0];
-            String companyId = infos[1];
+    /**
+     * 分片替换处理
+     *
+     * @param sourceDataList 数据源
+     * @return
+     */
+    private static String paddedPartitionHandel(List<String> sourceDataList) {
+        String sqlTemplate = "SELECT SUM(order_send_diff_time) as '配送总时长',count(order_id) as '总订单数' FROM report_order_summary WHERE store_id in (#{storeIds})AND expected_finish_time >= '2019-07-01'AND expected_finish_time < '2019-08-01' ;";
+        String[] tags = Arrays.array("#{storeIds}");
 
-            String realSql = sqlTemplate.replace(SHOP_ID_MARK, shopId).replace(COMPANY_ID_MARK, companyId);
-            realSqlList.add(realSql);
+        Iterable<List<String>> splitData = Iterables.paddedPartition(sourceDataList, 5);
+        ArrayList<String> resultSqlList = new ArrayList<>(1024);
+        for (List<String> spitData : splitData) {
+            replaceMark(Lists.newArrayList(StringUtils.join(spitData, ",")), sqlTemplate, tags, resultSqlList);
+        }
+        return StringUtils.join(resultSqlList, "\n");
+    }
+
+    private static void replaceMark(List<String> sourceDataList, String sqlTemplate, String[] tags, List<String> resultSqlList) {
+
+        for (String data : sourceDataList) {
+            if (StringUtils.isEmpty(data)) {
+                continue;
+            }
+            if (data.startsWith("-")) {
+                continue;
+            }
+            String[] infos = Arrays.array(data);
+            if (Arrays.isNullOrEmpty(infos)) {
+                continue;
+            }
+            for (int i = 0; i < infos.length; i++) {
+                String info = infos[i];
+                String tag = tags[i];
+                String realSql = sqlTemplate
+                        .replace(tag, info);
+                resultSqlList.add(realSql);
+            }
         }
     }
 
