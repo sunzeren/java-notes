@@ -146,4 +146,14 @@ public class PlatformLogReq {
         }
     }
 
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", PlatformLogReq.class.getSimpleName() + "[", "]")
+                .add("startTime=" + startTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .add("endTime=" + endTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .add("keyword='" + keyword + "'")
+                .add("logLevel=" + logLevel.getValue())
+                .add("sysType=" + sysType.getMemo())
+                .toString();
+    }
 }
