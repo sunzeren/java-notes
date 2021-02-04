@@ -80,7 +80,6 @@ public class ScanLog {
 
         @Override
         public void run() {
-            System.out.printf("线程:%s:%s%s", Thread.currentThread().getName(), LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), System.getProperty("line.separator"));
             msgHandel.exportMsg();
         }
     }
