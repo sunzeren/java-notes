@@ -25,8 +25,8 @@ public class ScanLog {
 
     public static void main(String[] args) {
         // 请求参数
-        LocalDateTime startTime = LocalDateTime.of(2021, 2, 5, 0, 0, 0);
-        LocalDateTime endTime = LocalDateTime.of(2021, 2, 5, 23, 59, 59, 999);
+        LocalDateTime startTime = LocalDateTime.of(2021, 2, 12, 0, 0, 0);
+        LocalDateTime endTime = LocalDateTime.of(2021, 2, 12, 23, 59, 59, 999);
         PlatformLogReq logReq = PlatformLogReq.getInstance(startTime, endTime, PlatformLogReq.SysTypeEnum.DMS_MCD);
         logReq.setLogLevel(PlatformLogReq.LogLevelEnum.ERROR);
         logReq.setPageSize(30);
@@ -55,7 +55,7 @@ public class ScanLog {
 
         @Override
         public void run() {
-            log.info("扫描心跳: 请求参数:{},", logReq.toString());
+            log.info("扫描心跳: 请求参数:{}", logReq.toString());
 
             PlatformLogRsp logRsp = restTemplate.getForObject(platformLogType.getValue().concat(logReq.getUrlParameters()), PlatformLogRsp.class);
 
