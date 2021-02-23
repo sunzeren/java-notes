@@ -23,7 +23,7 @@ public class HarFileFindUtils {
 
     @Before
     public void init() throws IOException {
-        FileInputStream inputStream = new FileInputStream("E:\\work\\project\\my-github\\java-notes\\src\\test\\java\\com\\sun\\demo\\base\\temp.json");
+        FileInputStream inputStream = new FileInputStream("E:\\work\\project\\my-github\\java-notes\\src\\test\\java\\com\\sun\\demo\\io\\sql\\temp.json");
         lines = IOUtils.readLines(inputStream, Charset.defaultCharset());
     }
 
@@ -72,13 +72,17 @@ public class HarFileFindUtils {
     }
 
 
+    /**
+     * 匹配范围内的字符串
+     */
     @Test
-    public void findData() {
-        String regx = "\\\\\"data\\\\\":.*?([(?=])";
+    public void findDataByRange() {
+        String start = "收到中台改单请求:orderNo:\\[";
+        String end = "] 转换为DMS订单详情";
 
-//        范围查找
-//        String regx = "(?<=\\{token\\=\\').+(?=', horseman=)";
-//        String regx = "\\\\\"data\\\\\":.*?(?<=])";
+        //        范围查找
+        String regx = "(?<=" + start + ").*?(?=" + end + ")";
+
         Pattern patternRex = Pattern.compile(regx);
         for (String line : lines) {
             Matcher matcher = patternRex.matcher(line);
@@ -86,7 +90,7 @@ public class HarFileFindUtils {
                 results.add(matcher.group());
             }
         }
-        System.out.println(results);
+        results.forEach(System.out::println);
     }
 
 
