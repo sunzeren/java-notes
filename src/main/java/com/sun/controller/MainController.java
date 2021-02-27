@@ -28,7 +28,7 @@ import java.util.List;
 @RequestMapping("/main")
 public class MainController {
 
-    @Value("${app.profile}")
+    @Value("${app.profile:}")
     private String profile;
 
     @Autowired

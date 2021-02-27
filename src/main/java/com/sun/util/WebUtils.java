@@ -1,11 +1,16 @@
 package com.sun.util;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.util.Assert;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -169,6 +174,24 @@ public final class WebUtils {
         Assert.hasText(name);
 
         removeCookie(request, response, name, cookiePath, cookieDomain);
+    }
+
+
+
+    /**
+     * web端下载文件
+     */
+    public static void webDownloadExcel(HttpServletResponse response, String fileName, String resourcePath) throws IOException {
+        response.setContentType("application/vnd.ms-excel");
+        response.setCharacterEncoding("utf-8");
+        // 这里URLEncoder.encode可以防止中文乱码
+        fileName = URLEncoder.encode(fileName, "UTF-8");
+        response.setHeader("Content-Disposition", "attachment;filename=\"" + fileName + "\"");
+
+        Resource resource = new ClassPathResource(resourcePath);
+        InputStream inputStream = resource.getInputStream();
+        byte[] data = IOUtils.toByteArray(inputStream);
+        IOUtils.write(data, response.getOutputStream());
     }
 
 
