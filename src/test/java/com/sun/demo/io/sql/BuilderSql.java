@@ -13,8 +13,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -27,12 +27,15 @@ public class BuilderSql {
 
 
     public static void main(String[] args) throws IOException {
-        String outputFile = "C:\\Users\\admin\\Desktop\\骑手平均配送时长\\sql\\horseman";
+        String outputFile = "C:\\Users\\admin\\Desktop\\3-12安宇上海门店提前关单\\sql";
         // 是否强制创建目录
         FileUtils.forceMkdir(new File(outputFile));
 
         // 以月为周期
-        exportOfDateCycle(outputFile);
+//        exportOfDateCycle(outputFile);
+
+        // 批量生成sql
+        exportOfTemplateName(outputFile);
     }
 
     /**
@@ -65,6 +68,41 @@ public class BuilderSql {
 //            start = start.plusMonths(1);
 //            end = end.plusMonths(1);
 //        }
+    }
+
+    /**
+     *  构建 source.size() 条sql,并将 source.get() 置入模板变量中
+     */
+    private static void exportOfTemplateName(String outputFile) throws IOException {
+        ClassPathResource resource = new ClassPathResource("file/MCD_HORSEMAN_IDS");
+        List<String> sourceDataList = IOUtils.readLines(resource.getInputStream(), "UTF-8");
+
+        String sqlTemplate = "SELECT\n" +
+                "\torder_id AS 'dms订单id',\n" +
+                "\torder_no AS '订单编号',\n" +
+                "\tstore_name AS '门店名称',\n" +
+                "\treceiver_address AS '配送地址',\n" +
+                "\thorseman_name AS '骑手名称',\n" +
+                "\tmark_exception_reason AS '标记异常原因',\n" +
+                "\tcompel_finish_reason AS '强制完成原因',\n" +
+                "\tclose_order_distance AS '关单距离',\n" +
+                "\tCONCAT( receiver_lng, ',', receiver_lng ) AS '收货地址坐标',\n" +
+                "\tclose_lng AS '关单经度',\n" +
+                "\tclose_lat AS '关单纬度',\n" +
+                "\tdelivery_distance AS '配送距离' \n" +
+                "FROM\n" +
+                "\treport_order_summary_#{storeId} \n" +
+                "WHERE\n" +
+                "\texpected_finish_time >= '2021-02-01 00:00:00' \n" +
+                "\tAND expected_finish_time < '2021-03-01 00:00:00' \n" +
+                "\tAND is_advance_close_order = 2;";
+        String[] variableArrays = Arrays.array("#{storeId}");
+
+        List<String> resultLis = new ArrayList<>();
+        for (String data : sourceDataList) {
+            replaceMark(Collections.singletonList(data), sqlTemplate, variableArrays, resultLis);
+        }
+        IOUtils.write(StringUtils.join(resultLis, "\r\n"), new FileOutputStream(String.format("%s\\%s.sql", outputFile, "订单明细")), "UTF-8");
     }
 
     /**
