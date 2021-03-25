@@ -60,12 +60,16 @@ public class PlatformLogReq {
     private PlatformLogReq() {
     }
 
+
+    public static final int DEFAULT_PAGE_NOW = 1;
+    public static final int DEFAULT_PAGE_SIZE = 20;
+
     public static PlatformLogReq getInstance(LocalDateTime startTime, LocalDateTime endTime, SysTypeEnum sysType) {
         PlatformLogReq req = new PlatformLogReq();
         req.setStartTime(startTime);
         req.setEndTime(endTime);
-        req.setPageNow(1);
-        req.setPageSize(20);
+        req.setPageNow(DEFAULT_PAGE_NOW);
+        req.setPageSize(DEFAULT_PAGE_SIZE);
         req.setSysType(sysType);
         return req;
     }

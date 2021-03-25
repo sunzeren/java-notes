@@ -25,6 +25,13 @@ public class ScanLog {
 
 
     public static void main(String[] args) {
+        ScanLog log = new ScanLog();
+        log.分页导出Excel();
+        log.轮询查询导出();
+    }
+
+    @Test
+    public void 轮询查询导出() {
         // 请求参数
         LocalDateTime startTime = LocalDateTime.of(2021, 3, 25, 0, 0, 0);
         LocalDateTime endTime = LocalDateTime.of(2021, 3, 25, 23, 59, 59, 999);
@@ -41,7 +48,6 @@ public class ScanLog {
         scheduledThreadPool.scheduleAtFixedRate(new ExportTask(msgHandel), 15, 60, TimeUnit.SECONDS);
         Runtime.getRuntime().addShutdownHook(new Thread(msgHandel::closeApplicationEvent));
     }
-
 
     @Test
     public void 分页导出Excel() {
