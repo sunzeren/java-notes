@@ -105,6 +105,13 @@ public class PlatformLogReq {
         return joiner.toString();
     }
 
+    public int getPageNow() {
+        return pageNow;
+    }
+
+    public void setPageNow(int pageNow) {
+        this.pageNow = pageNow;
+    }
 
     @Getter
     public enum LogLevelEnum implements Convertible {
@@ -149,11 +156,12 @@ public class PlatformLogReq {
     @Override
     public String toString() {
         return new StringJoiner(", ", PlatformLogReq.class.getSimpleName() + "[", "]")
-                .add("startTime=" + startTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
-                .add("endTime=" + endTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .add("startTime=" + startTime)
+                .add("endTime=" + endTime)
                 .add("keyword='" + keyword + "'")
-                .add("logLevel=" + logLevel.getValue())
-                .add("sysType=" + sysType.getMemo())
+                .add("pageNow=" + pageNow)
+                .add("pageSize=" + pageSize)
+                .add("sysType=" + sysType)
                 .toString();
     }
 }

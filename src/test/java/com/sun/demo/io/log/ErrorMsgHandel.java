@@ -4,6 +4,7 @@ import com.alibaba.dubbo.common.utils.ConcurrentHashSet;
 import com.alibaba.excel.EasyExcel;
 import com.sun.demo.io.log.bean.PlatformLogReq;
 import com.sun.demo.io.log.bean.PlatformLogRsp;
+import com.sun.demo.io.log.bean.PlatformLogType;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -17,14 +18,14 @@ public class ErrorMsgHandel implements MsgHandel {
 
     private static long lastHashCode = 0;
 
-    private static final Object lock = new Object();
-
     static {
-        whiteList.add("(请求异常)同步配送状态到上游:orderId");
-        whiteList.add("转派第三方骑手公司失败");
-        whiteList.add("新增订单坐标记录异常 orderId=");
-        whiteList.add("BusinessException");
-        whiteList.add("IOS推送");
+        //region 白名单
+//        whiteList.add("(请求异常)同步配送状态到上游:orderId");
+//        whiteList.add("转派第三方骑手公司失败");
+//        whiteList.add("新增订单坐标记录异常 orderId=");
+//        whiteList.add("BusinessException");
+//        whiteList.add("IOS推送");
+        //endregion
     }
 
     private final String exportPath;
@@ -44,7 +45,7 @@ public class ErrorMsgHandel implements MsgHandel {
     }
 
     @Override
-    public void handelMsg(ScanLog.PlatformLogType platformLogType, PlatformLogReq logReq, PlatformLogRsp.DataBean.RowsBean row) {
+    public void handelMsg(PlatformLogType platformLogType, PlatformLogReq logReq, PlatformLogRsp.DataBean.RowsBean row) {
         if (logReq.getLogLevel() == PlatformLogReq.LogLevelEnum.ERROR && ErrorMsgHandel.maybeIsError(row.getMsg())) {
             if (maybeIsError(row.getMsg()) && errorSet.add(row)) {
                 System.err.println(row.simpleText());
@@ -55,7 +56,7 @@ public class ErrorMsgHandel implements MsgHandel {
     }
 
     @Override
-    public void exportMsg() {
+    public synchronized void exportMsg() {
         if (errorSet.isEmpty()) {
             return;
         }
@@ -63,13 +64,8 @@ public class ErrorMsgHandel implements MsgHandel {
         if (errorSet.hashCode() == lastHashCode) {
             return;
         }
-        synchronized (lock) {
-            if (errorSet.hashCode() == lastHashCode) {
-                return;
-            }
-            lastHashCode = errorSet.hashCode();
-            exportErrorData();
-        }
+        exportErrorData();
+        lastHashCode = errorSet.hashCode();
     }
 
     private void exportErrorData() {
@@ -79,7 +75,6 @@ public class ErrorMsgHandel implements MsgHandel {
 
         String fileName = exportPath + "-errorData.xlsx";
         // 这里 需要指定写用哪个class去写，然后写到第一个sheet，名字为模板 然后文件流会自动关闭
-        // 如果这里想使用03 则 传入excelType参数即可
         EasyExcel.write(fileName, PlatformLogRsp.DataBean.RowsBean.class)
                 .sheet("错误日志")
                 .doWrite(rowsList);
