@@ -77,8 +77,8 @@ public class HarFileFindUtils {
      */
     @Test
     public void findDataByRange() {
-        String start = "收到中台改单请求:orderNo:\\[";
-        String end = "] 转换为DMS订单详情";
+        String start = "\"originNo\":\"";
+        String end = "\"";
 
         //        范围查找
         String regx = "(?<=" + start + ").*?(?=" + end + ")";
@@ -87,9 +87,13 @@ public class HarFileFindUtils {
         for (String line : lines) {
             Matcher matcher = patternRex.matcher(line);
             while (matcher.find()) {
-                results.add(matcher.group());
+                String group = matcher.group();
+                if (!results.add(group)) {
+                    System.err.println("重复值：" + group);
+                }
             }
         }
+
         results.forEach(System.out::println);
     }
 
