@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 分页导出任务
+ * 分页查询数据后,汇总导出
  */
 public class PageExportTask extends RunnableTask {
 

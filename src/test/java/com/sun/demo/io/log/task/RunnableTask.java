@@ -8,6 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * 扫描日志
+ */
 public class RunnableTask implements Runnable {
     protected static final Logger log = LoggerFactory.getLogger(RunnableTask.class);
     protected static final RestTemplate restTemplate = new RestTemplate();
