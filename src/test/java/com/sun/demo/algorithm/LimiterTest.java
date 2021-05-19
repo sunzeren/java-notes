@@ -20,6 +20,9 @@ public class LimiterTest {
     @Test
     @SuppressWarnings("all")
     public void 令牌桶限流() {
+        // 设置 ForkJoinPool.common 的线程池子大小,默认为cpu核数-1
+        System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism", "128");
+
         // 提供一个每秒产生n个令牌的限流桶
         RateLimiter limiter = RateLimiter.create(10);
         AtomicInteger counter = new AtomicInteger(1);
